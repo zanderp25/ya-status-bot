@@ -21,6 +21,10 @@ class Status(commands.Cog):
                 icon_url=f"{user.avatar_url}"
             )
         )
+    async def notify(user):
+        users = [(await self.bot.fetch_channel(config.notif_channel)).guild.get_user(user).mention for user in config.notif_users]
+        await (await self.bot.fetch_channel(config.notif_channel)).send(
+            f'{", ".join(users)} {user.name} is offline'
 
     @commands.command()
     async def status(self,ctx):
@@ -42,6 +46,7 @@ class Status(commands.Cog):
                 if before.status == discord.Status.online and after.status != discord.Status.online:
                     print("Offline!")
                     await self.set_status(after)
+                    await self.notify(before);
                 elif before.status != discord.Status.online and after.status == discord.Status.online:
                     print("Online!")
                     await self.set_status(after)
