@@ -30,7 +30,7 @@ class Status(commands.Cog):
     @commands.command()
     async def status(self,ctx):
         user = (await self.bot.fetch_channel(config.channel)).guild.get_member(config.user)
-        await ctx.send(
+        await ctx.reply(
             embed = discord.Embed(
                 description=f"{user.name} is now {'offline' if not user.status == discord.Status.online else 'online'}",
                 color = discord.Color.red() if not user.status == discord.Status.online else discord.Color.green()
@@ -43,7 +43,7 @@ class Status(commands.Cog):
     @commands.is_owner()
     async def test_notify(self,ctx):
         await self.notify(ctx.author)
-        await ctx.send("test notification sent")
+        await ctx.reply("test notification sent")
     
     @commands.Cog.listener(name="on_member_update")
     async def on_member_update(self,before,after):
