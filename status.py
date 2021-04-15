@@ -28,7 +28,7 @@ class Status(commands.Cog):
 
     @commands.command()
     async def status(self,ctx):
-        f'''tests the status of {(await self.bot.fetch_channel(config.channel)).guild.get_member(config.user).name}'''
+        '''tests the status of the bot/user currently being tracked'''
         user = (await self.bot.fetch_channel(config.channel)).guild.get_member(config.user)
         await ctx.reply(
             embed = discord.Embed(
