@@ -47,7 +47,7 @@ class Status(commands.Cog):
                 if before.status == discord.Status.online and after.status != discord.Status.online:
                     print("Offline!")
                     await self.set_status(after)
-                    await self.notify(before);
+                    await self.notify(before)
                 elif before.status != discord.Status.online and after.status == discord.Status.online:
                     print("Online!")
                     await self.set_status(after)
