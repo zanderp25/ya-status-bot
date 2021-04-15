@@ -1,11 +1,10 @@
 from os import name
 import discord, config
 from discord.ext import commands
-from discord.flags import Intents
 
 bot = commands.Bot(
     command_prefix=commands.when_mentioned_or("yas!","//"), 
-    intents=Intents.all(),
+    intents=discord.Intents.all(),
     owner_ids=[511655498676699136,421698654189912064],
     )
 token = open("token.txt").read()
