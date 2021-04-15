@@ -38,12 +38,13 @@ class Status(commands.Cog):
     @commands.Cog.listener(name="on_member_update")
     async def on_member_update(self,before,after):
         if before.id == config.user:
-            if before.status != discord.Status.offline and after.status == discord.Status.offline:
-                print("Offline!")
-                await self.set_status(after)
-            elif before.status != discord.Status.online and after.status == discord.Status.online:
-                print("Online!")
-                await self.set_status(after)
+            if before.guild == (await self.bot.fetch_channel(config.channel)).guild:
+                if before.status == discord.Status.online and after.status != discord.Status.online:
+                    print("Offline!")
+                    await self.set_status(after)
+                elif before.status != discord.Status.online and after.status == discord.Status.online:
+                    print("Online!")
+                    await self.set_status(after)
             
 
 def setup(bot):
