@@ -1,4 +1,3 @@
-from os import name
 import discord, config
 from discord.ext import commands
 
