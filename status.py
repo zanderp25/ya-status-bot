@@ -15,8 +15,10 @@ class Status(commands.Cog):
         )
         await (await self.bot.fetch_channel(config.channel)).send(
             embed=discord.Embed(
-                title = f"{user.name} is now {'offline' if not user.status == discord.Status.online else 'online'}",
                 color = discord.Color.red() if not user.status == discord.Status.online else discord.Color.green()
+            ).set_author(
+                name=f"{user.name}is now {'offline' if not user.status == discord.Status.online else 'online'}", 
+                icon_url=f"{user.avatar_url}"
             )
         )
 
@@ -25,9 +27,11 @@ class Status(commands.Cog):
         user = (await self.bot.fetch_channel(config.channel)).guild.get_member(config.user)
         await ctx.send(
             embed = discord.Embed(
-                title=f"{user.name} Status",
                 description=f"{user.name} is now {'offline' if not user.status == discord.Status.online else 'online'}",
                 color = discord.Color.red() if not user.status == discord.Status.online else discord.Color.green()
+            ).set_author(
+                name=f"{user.name}", 
+                icon_url=f"{user.avatar_url}"
             )
         )
     
