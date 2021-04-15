@@ -39,6 +39,11 @@ class Status(commands.Cog):
                 icon_url=f"{user.avatar_url}"
             )
         )
+    @commands.command(name="test")
+    @commands.is_owner()
+    async def test_notify(self,ctx):
+        await self.notify(ctx.author)
+        await ctx.send("test notification sent")
     
     @commands.Cog.listener(name="on_member_update")
     async def on_member_update(self,before,after):
