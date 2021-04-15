@@ -13,7 +13,7 @@ token = open("token.txt").read()
 @bot.event
 async def on_ready():
     print("ready")
-    user = bot.guilds[0].get_member(config.user)
+    user = (await bot.fetch_channel(config.channel)).guild.get_member(config.user)
     print(f"Now tracking status of {user}")
     print(f"{user} is now {'offline' if not user.status == discord.Status.online else 'online'}")
     await bot.change_presence(
