@@ -17,7 +17,7 @@ class Status(commands.Cog):
             embed=discord.Embed(
                 color = discord.Color.red() if not user.status == discord.Status.online else discord.Color.green()
             ).set_author(
-                name=f"{user.name}is now {'offline' if not user.status == discord.Status.online else 'online'}", 
+                name=f"{user.name} is now {'offline' if not user.status == discord.Status.online else 'online'}", 
                 icon_url=f"{user.avatar_url}"
             )
         )
