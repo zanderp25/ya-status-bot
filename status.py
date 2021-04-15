@@ -1,6 +1,5 @@
-import discord
+import discord, config
 from discord.ext import commands
-import config
 
 class Status(commands.Cog):
     def __init__(self, bot):
@@ -24,24 +23,26 @@ class Status(commands.Cog):
     async def notify(self,user):
         users = [(await self.bot.fetch_channel(config.notif_channel)).guild.get_member(user).mention for user in config.notif_users]
         await (await self.bot.fetch_channel(config.notif_channel)).send(
-            f'{", ".join(users)} {user.name} is offline'
+            f'{", ".join(users)}: {user.name} is offline'
         )
 
     @commands.command()
     async def status(self,ctx):
+        f'''tests the status of {(await self.bot.fetch_channel(config.channel)).guild.get_member(config.user).name}'''
         user = (await self.bot.fetch_channel(config.channel)).guild.get_member(config.user)
         await ctx.reply(
             embed = discord.Embed(
-                description=f"{user.name} is now {'offline' if not user.status == discord.Status.online else 'online'}",
+                description=f"{user.name} is {'offline' if not user.status == discord.Status.online else 'online'} right now.",
                 color = discord.Color.red() if not user.status == discord.Status.online else discord.Color.green()
             ).set_author(
                 name=f"{user.name}", 
                 icon_url=f"{user.avatar_url}"
             )
         )
-    @commands.command(name="test")
+    @commands.command(name="notif-test", aliases=["notif","notiftest"])
     @commands.is_owner()
     async def test_notify(self,ctx):
+        '''tests if the notifications work'''
         await self.notify(ctx.author)
         await ctx.reply("test notification sent")
     
