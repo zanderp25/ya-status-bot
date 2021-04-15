@@ -22,7 +22,7 @@ class Status(commands.Cog):
             )
         )
     async def notify(self,user):
-        users = [(await self.bot.fetch_channel(config.notif_channel)).guild.get_user(user).mention for user in config.notif_users]
+        users = [(await(await self.bot.fetch_channel(config.notif_channel)).guild.fetch_user(user)).mention for user in config.notif_users]
         await (await self.bot.fetch_channel(config.notif_channel)).send(
             f'{", ".join(users)} {user.name} is offline'
         )
