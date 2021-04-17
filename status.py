@@ -49,7 +49,7 @@ class Status(commands.Cog):
     @commands.command(name="clear",aliases=["purge"])
     @commands.has_permissions(manage_messages="true")
     async def clear(self,ctx):
-        if ctx.channel.id = config.channel:
+        if ctx.channel.id == config.channel:
             n = await ctx.channel.purge(
                 limit=number,
                 check=lambda msg: msg.author is ctx.guild.me,
