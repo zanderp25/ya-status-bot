@@ -1,4 +1,4 @@
-import discord, config
+import discord, config, asyncio
 from discord.ext import commands
 
 class Status(commands.Cog):
@@ -45,6 +45,20 @@ class Status(commands.Cog):
         '''tests if the notifications work'''
         await self.notify(ctx.author)
         await ctx.reply("test notification sent")
+
+    @commands.command(name="clear",aliases=["purge"])
+    @commands.has_permissions(manage_messages="true")
+    async def clear(self,ctx):
+        if ctx.channel.id = config.channel:
+            n = await ctx.channel.purge(
+                limit=number,
+                check=lambda msg: msg.author is ctx.guild.me,
+            )
+            msg = await ctx.send(f"Deleted {len(n)} messages.")
+            await asyncio.sleep(2)
+            await msg.delete()
+        else:
+            await ctx.reply(f"This command can only be used in {(await bot.fetch_channel(config.channel)).mention}")
     
     @commands.Cog.listener(name="on_member_update")
     async def on_member_update(self,before,after):
