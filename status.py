@@ -65,7 +65,7 @@ class Status(commands.Cog):
         await ctx.reply("test notification sent")
 
     @commands.command(name="clear", aliases=["purge"])
-    @commands.has_permissions(manage_messages="true")
+    @commands.has_permissions(manage_messages=True)
     async def clear(self, ctx):
         if ctx.channel.id == config.channel:
             n = await ctx.channel.purge(
