@@ -12,7 +12,7 @@ class Status(commands.Cog):
                 name=f"{user.name} be {'offline' if not user.status == discord.Status.online else 'online'}",
             ),
         )
-        await (await self.bot.fetch_channel(config.channel)).send(
+        await self.bot.get_channel(config.channel).send(
             embed=discord.Embed(
                 color = discord.Color.red() if not user.status == discord.Status.online else discord.Color.green()
             ).set_author(
@@ -21,15 +21,15 @@ class Status(commands.Cog):
             )
         )
     async def notify(self,user):
-        users = [(await self.bot.fetch_channel(config.notif_channel)).guild.get_member(user).mention for user in config.notif_users]
-        await (await self.bot.fetch_channel(config.notif_channel)).send(
+        users = [self.bot.get_channel(config.notif_channel).guild.get_member(user).mention for user in config.notif_users]
+        await self.bot.get_channel(config.notif_channel).send(
             f'{", ".join(users)}: {user.name} is offline'
         )
 
     @commands.command()
     async def status(self,ctx):
         '''tests the status of the bot/user currently being tracked'''
-        user = (await self.bot.fetch_channel(config.channel)).guild.get_member(config.user)
+        user = self.bot.get_channel(config.channel).guild.get_member(config.user)
         await ctx.reply(
             embed = discord.Embed(
                 description=f"{user.name} is {'offline' if not user.status == discord.Status.online else 'online'} right now.",
@@ -58,12 +58,12 @@ class Status(commands.Cog):
             await asyncio.sleep(2)
             await msg.delete()
         else:
-            await ctx.reply(f"This command can only be used in {(await self.bot.fetch_channel(config.channel)).mention}")
+            await ctx.reply(f"This command can only be used in {self.bot.get_channel(config.channel).mention}")
     
     @commands.Cog.listener(name="on_member_update")
     async def on_member_update(self,before,after):
         if before.id == config.user:
-            if before.guild == (await self.bot.fetch_channel(config.channel)).guild:
+            if before.guild == self.bot.get_channel(config.channel).guild:
                 if before.status == discord.Status.online and after.status != discord.Status.online:
                     print("Offline!")
                     await self.set_status(after)
