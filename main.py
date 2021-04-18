@@ -1,24 +1,34 @@
-import discord, config
+import discord
+import config
 from discord.ext import commands
 
 bot = commands.Bot(
     command_prefix=commands.when_mentioned_or("yas!", "//"),
-    intents=discord.Intents.all(),
-    owner_ids=[511655498676699136, 421698654189912064],
+    intents=discord.Intents(
+        guilds=True,
+        members=True,
+        guild_messages=True,
+        presences=True
+    ),
+    owner_ids=config.bot_owners,
 )
 token = open("token.txt").read()
 
 
 @bot.event
 async def on_ready():
-    print("ready")
-    user = (await bot.fetch_channel(config.channel)).guild.get_member(config.user)
+    print("Ready! Logged in as", str(bot.user))
+    scog = bot.get_cog("Status")
+    if not scog:
+        print("critical error - status cog was not loaded at runtime.")
+        return
+    user = scog.user(config.user)
     print(f"Now tracking status of {user}")
-    print(f"{user} is now {'offline' if not user.status == discord.Status.online else 'online'}")
+    print(f"{user} is now {scog.name_status(user.status)}")
     await bot.change_presence(
         activity=discord.Activity(
             type=discord.ActivityType.watching,
-            name=f"{user.name} be {'offline' if not user.status == discord.Status.online else 'online'}",
+            name=f"{user.name} be {scog.name_status(user.status)}",
         ),
     )
 
