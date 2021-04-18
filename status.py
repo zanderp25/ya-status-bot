@@ -51,14 +51,14 @@ class Status(commands.Cog):
     async def clear(self,ctx):
         if ctx.channel.id == config.channel:
             n = await ctx.channel.purge(
-                limit=number,
+                limit=1000,
                 check=lambda msg: msg.author is ctx.guild.me,
             )
             msg = await ctx.send(f"Deleted {len(n)} messages.")
             await asyncio.sleep(2)
             await msg.delete()
         else:
-            await ctx.reply(f"This command can only be used in {(await bot.fetch_channel(config.channel)).mention}")
+            await ctx.reply(f"This command can only be used in {(await self.bot.fetch_channel(config.channel)).mention}")
     
     @commands.Cog.listener(name="on_member_update")
     async def on_member_update(self,before,after):
