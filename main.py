@@ -8,7 +8,8 @@ bot = commands.Bot(
         guilds=True,
         members=True,
         guild_messages=True,
-        presences=True
+        presences=True,
+        reactions=True
     ),
     owner_ids=config.bot_owners,
 )
