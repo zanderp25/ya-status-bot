@@ -11,6 +11,10 @@ class Status(commands.Cog):
     @property
     def notification_channel(self) -> discord.TextChannel:
         return self.bot.get_channel(config.notif_channel)
+    
+    @property
+    def status_channel(self) -> discord.TextChannel:
+        return self.bot.get_channel(config.channel)
 
     def user(self, user_id: int) -> discord.Member:
         return self.notification_channel.guild.get_member(user_id)
@@ -35,7 +39,7 @@ class Status(commands.Cog):
             name=f"{user.name} is now {self.name_status(user.status)}.",
             icon_url=str(user.avatar_url_as(static_format="png"))  # NB: webp has less support than png
         )
-        await self.notification_channel.send(embed=embed)
+        await self.status_channel.send(embed=embed)
 
     async def notify(self, user):
         users = [
