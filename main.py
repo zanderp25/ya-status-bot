@@ -34,7 +34,7 @@ async def on_ready():
     )
 
 
-cogs = ["jishaku", "status"]
+cogs = ["jishaku", "status", "pm2", "errors"]
 
 for cog in cogs:
     try:
