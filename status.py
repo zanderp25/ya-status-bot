@@ -25,7 +25,7 @@ class Status(commands.Cog):
             return "online"
         return "offline"
 
-    async def set_status(self, user):
+    async def set_status(self, user: discord.User):
         await self.bot.change_presence(
             activity=discord.Activity(
                 type=discord.ActivityType.watching,
@@ -37,7 +37,7 @@ class Status(commands.Cog):
         )
         embed.set_author(
             name=f"{user.name} is now {self.name_status(user.status)}.",
-            icon_url=str(user.avatar_url_as(static_format="png"))  # NB: webp has less support than png
+            icon_url=str(user.avatar.url)
         )
         await self.status_channel.send(embed=embed)
 
